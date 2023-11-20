@@ -1,6 +1,37 @@
 # #!/usr/bin/perl
 snippet #!
 	#!/usr/bin/env perl
+snippet #!f
+	#!/usr/bin/env perl
+	use strict;
+	use warnings;
+snippet #!m
+	#!/usr/bin/env perl
+	use strict;
+	use warnings;
+	use Parallel::ForkManager;
+	my $pm = Parallel::ForkManager->new(8);
+
+	foreach (){
+		my $pid=$pm->start and next;
+
+		$pm->finish;
+	}
+	$pm->wait_all_children;
+snippet usage
+	@ARGV ${1} or die "Usage: ${2}\n";
+	my (${3}) = @ARGV;
+	
+snippet cd
+	chdir $dir or die "failing while changing to $dir\n";
+snippet pick3
+	open($PICK,"<${1}");
+	while(<$PICK>){
+		chomp;
+		my ($file, $value1, $on) = split(/\s+/,$_);
+		next if($on <1);
+		${2}
+	}
 
 # Hash Pointer
 snippet .
@@ -10,6 +41,24 @@ snippet sub
 	sub ${1:function_name} {
 		${0}
 	}
+snippet subr
+	sub ${1:function_name} {
+		my (${2}) = @_;
+	}
+# splite
+snippet spliteN
+	split(/\n/,${1:command});
+snippet spliteS
+	my (${0}) = split(/\s+/,${1:command});
+snippet opensac
+	open(my $SAC, "|sac${1}");
+	${2}
+	print $SAC "q\n";
+	close $SAC;
+snippet -q
+	>& /dev/null
+snippet psac
+	print $SAC "${1}";
 # Conditional
 snippet if
 	if (${1}) {
@@ -46,6 +95,8 @@ snippet unless
 	unless (${1}) {
 		${0}
 	}
+snippet NextFile
+	next if (-e ${1});
 # Unless conditional One-line
 snippet xunless
 	$1 unless $0;
@@ -82,6 +133,10 @@ snippet for
 # Foreach Loop One-line
 snippet fore
 	$1 foreach @$0;
+snippet saclst
+	foreach my \$info (\`saclst ${0} f ${1}\`){
+		$3
+	}
 # Package
 snippet package
 	package ${1:`expand('%:p:s?.*lib/??:r:gs?/?::?')`};

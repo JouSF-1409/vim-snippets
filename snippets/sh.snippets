@@ -21,6 +21,10 @@ snippet if
 	if [ $1 ]; then
 		${0:${VISUAL}}
 	fi
+snippet ife
+	if [ -e $1 ];then
+		${0:${VISUAL}}
+	fi
 snippet elif
 	elif [ $1 ]; then
 		${0:${VISUAL}}
@@ -108,3 +112,29 @@ snippet fun
 	function ${1:function_name}() {
 		$0
 	}
+snippet cuts
+	cut -d" " -f
+snippet sac
+	sac<<EOF
+	$0
+	q
+	EOF
+snippet dirf
+	for dir in \`ls -d ${1}\`
+	do
+		cd $dir
+		${2}
+
+		cd ../
+	done
+snippet awk3
+	awk '{if(\$3>0){print${1}}}' $2
+snippet lp1
+	cat $1|wc -l| awk '{print $1+1}'
+snippet gmtbegin
+	gmt begin ${1} png,pdf
+		${2}
+	gmt end
+snippet gmtsac
+	gmt basemap -JX$1 -R$2 -B$3
+	gmt sac -J$4 -R$5 -E$6
